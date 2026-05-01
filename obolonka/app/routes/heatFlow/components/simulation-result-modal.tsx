@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     LineChart,
     Line,
@@ -9,6 +9,7 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
+import { exportToCSV, exportToJSON, exportToPDF, exportToTXT, exportToXLSX } from '../services/file-output';
 
 // Тип даних для одного кроку симуляції
 interface ChartDataPoint {
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const SimulationResultsModal: React.FC<Props> = ({ isOpen, data, onClose }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     if (!isOpen) return null;
 
     return (
@@ -44,16 +46,117 @@ const SimulationResultsModal: React.FC<Props> = ({ isOpen, data, onClose }) => {
                         Результати симуляції
                     </h2>
 
-                    <button
-                        onClick={onClose}
-                        className="px-4 py-2 text-sm font-medium bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                    >
-                        Закрити
-                    </button>
+
+                    <div className="flex items-center gap-2 relative">
+
+                        {/* Гамбургер */}
+                        <button
+                            onClick={() => setIsMenuOpen(prev => !prev)}
+                            className="p-2 rounded-lg hover:bg-gray-100 transition"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+
+                        {/* Dropdown */}
+                        {isMenuOpen && (
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 overflow-hidden">
+
+                                <button
+                                    onClick={() => exportToJSON(data)}
+                                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-sm transition"
+                                >
+                                    <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeWidth="2" d="M4 4h16v16H4z" />
+                                        <path strokeWidth="2" d="M8 8h8M8 12h6M8 16h4" />
+                                    </svg>
+                                    Зберегти як JSON
+                                </button>
+
+                                <button
+                                    onClick={() => exportToCSV(data ?? [])}
+                                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-sm transition"
+                                >
+                                    <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeWidth="2" d="M4 4h16v16H4z" />
+                                        <path strokeWidth="2" d="M4 9h16M9 4v16" />
+                                    </svg>
+                                    Зберегти як CSV
+                                </button>
+
+                                <button
+                                    onClick={() => exportToTXT(data ?? [])}
+                                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-sm transition"
+                                >
+                                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeWidth="2" d="M4 4h16v16H4z" />
+                                        <path strokeWidth="2" d="M8 8h8M8 12h8M8 16h8" />
+                                    </svg>
+                                    Зберегти як TXT
+                                </button>
+
+                                <button
+                                    onClick={() => exportToXLSX(data ?? [])}
+                                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-sm transition"
+                                >
+                                    <svg
+                                        className="w-4 h-4 text-green-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeWidth="2" d="M4 4h16v16H4z" />
+                                        <path strokeWidth="2" d="M4 9h16M9 4v16" />
+                                    </svg>
+
+                                    Зберегти як XLSX
+
+                                </button>
+
+                                {/* DOES NOT WORK */}
+                                {/* <button
+                                    onClick={() => exportToPDF('simulation-results')}
+                                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-sm transition"
+                                >
+                                    <svg
+                                        className="w-4 h-4 text-blue-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeWidth="2" d="M4 4h16v16H4z" />
+                                        <path strokeWidth="2" d="M8 8h8M8 12h8M8 16h8" />
+                                    </svg>
+
+                                    Зберегти як PDF
+                                </button> */}
+
+
+                                <div className="border-t" />
+
+                                <button
+                                    onClick={onClose}
+                                    className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 text-sm"
+                                >
+                                    Закрити
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Закрити */}
+                        <button
+                            onClick={onClose}
+                            className="px-4 py-2 text-sm font-medium bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                        >
+                            Закрити
+                        </button>
+                    </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 overflow-y-auto px-6 py-6">
+                <div id="simulation-results" className="bg-white text-black flex-1 overflow-y-auto px-6 py-6">
                     {!data ? (
                         <div className="flex flex-col items-center justify-center h-full gap-4 text-gray-500">
 
@@ -152,8 +255,8 @@ const SimulationResultsModal: React.FC<Props> = ({ isOpen, data, onClose }) => {
                         </div>
                     )}
 
+                </div>
             </div>
-        </div>
         </div >
     );
 };
