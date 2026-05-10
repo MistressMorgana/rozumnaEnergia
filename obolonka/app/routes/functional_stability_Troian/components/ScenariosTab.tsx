@@ -151,7 +151,7 @@ export default function ScenariosTab() {
             </div>
             
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1">Черга пріоритету</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1">Категорія важливості</label>
               <select className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-300 outline-none" value={devForm.prio} onChange={e => setDevForm({ ...devForm, prio: Number(e.target.value) })}>
                 <option value={1}>1 - Критична</option>
                 <option value={2}>2 - Необхідна</option>
@@ -224,7 +224,7 @@ export default function ScenariosTab() {
             <thead>
               <tr className="bg-gray-100 text-gray-600 text-sm border-b-2 border-gray-300">
                 <th className="p-3">Назва</th>
-                <th className="p-3 text-center">Черга</th>
+                <th className="p-3 text-center">Категорія важливості</th>
                 <th className="p-3">Параметри кабелю</th>
                 <th className="p-3">Години роботи</th>
                 <th className="p-3 text-center">Дії</th>

@@ -1,9 +1,4 @@
 services:
-  obolonka:
-    build:
-      context: ./obolonka
-    ports:
-      - "5173:3000"
   backend_troian:
     image: vitaliktroian04/smart-energy-stability:latest
     ports:

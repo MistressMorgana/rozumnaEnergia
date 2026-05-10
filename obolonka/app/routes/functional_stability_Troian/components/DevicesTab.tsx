@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 const API_URL = 'http://localhost:8085/api';
@@ -105,11 +106,11 @@ export default function DevicesTab() {
           
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1">P ном (Вт) <span className="text-red-500">*</span></label>
+              <label className="block text-xs font-bold text-gray-500 mb-1">Потужність номінальна (Вт) <span className="text-red-500">*</span></label>
               <input className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-300 outline-none" type="number" min="1" placeholder="300" value={form.p_nom} onChange={e => setForm({ ...form, p_nom: e.target.value })} />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1">P макс (Вт) <span className="text-red-500">*</span></label>
+              <label className="block text-xs font-bold text-gray-500 mb-1">Потужність максимальна (Вт) <span className="text-red-500">*</span></label>
               <input className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-300 outline-none" type="number" min="1" placeholder="450" value={form.p_max} onChange={e => setForm({ ...form, p_max: e.target.value })} />
             </div>
           </div>
@@ -142,8 +143,8 @@ export default function DevicesTab() {
           <thead>
             <tr className="bg-gray-100 text-gray-600 text-sm border-b-2 border-gray-300">
               <th className="p-3">Назва та Модель</th>
-              <th className="p-3 text-center">P ном (Вт)</th>
-              <th className="p-3 text-center">P макс (Вт)</th>
+              <th className="p-3 text-center">Потужність ном. (Вт)</th>
+              <th className="p-3 text-center">Потужність макс. (Вт)</th>
               <th className="p-3">Тип</th>
               <th className="p-3 text-center">Дії</th>
             </tr>

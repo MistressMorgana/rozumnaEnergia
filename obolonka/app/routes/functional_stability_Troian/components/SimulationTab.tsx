@@ -248,7 +248,7 @@ export default function SimulationTab() {
         {simData ? (
           <>
             <div className="h-72 w-full border-b pb-8">
-              <h3 className="font-bold text-center text-gray-700 mb-4">Профіль навантаження (Вт)</h3>
+              <h3 className="font-bold text-center text-gray-700 mb-4">Динаміка споживання потужності (Вт)</h3>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={simData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -263,7 +263,7 @@ export default function SimulationTab() {
             </div>
             
             <div className="h-72 w-full">
-              <h3 className="font-bold text-center text-gray-700 mb-4">Напруга (В) та Рівень заряду (%)</h3>
+              <h3 className="font-bold text-center text-gray-700 mb-4">Стан електромережі та залишок заряду акумулятора</h3>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={simData}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
@@ -282,7 +282,7 @@ export default function SimulationTab() {
                   <Line yAxisId="left" type="monotone" dataKey="Voltage" name="Напруга мережі (В)" stroke="#2563EB" strokeWidth={2} dot={false} />
                   {simConfig.type === 'Батарея' && (
                     <>
-                      <Line yAxisId="right" type="stepAfter" dataKey="SoC" name="SoC" stroke="#10B981" strokeWidth={2} dot={false} />
+                      <Line yAxisId="right" type="stepAfter" dataKey="SoC" name="Заряд батареї (%)" stroke="#10B981" strokeWidth={2} dot={false} />
                       <ReferenceLine yAxisId="right" y={simConfig.limit} stroke="darkgreen" strokeDasharray="3 3" />
                     </>
                   )}
