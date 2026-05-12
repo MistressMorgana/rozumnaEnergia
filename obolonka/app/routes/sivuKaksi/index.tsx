@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Route } from "./+types/index";
+import { API_BASE_URL } from "consts";
 
 export function meta({ }: Route.MetaArgs) {
     return [
@@ -12,7 +13,7 @@ export default function Home() {
 
     const [text, setText] = useState("Warten Sie bitte, bis das Ladung fertig ist...");
     useEffect(() => {
-        fetch("http://pokazovaSlurzba:3000/dva").then((d) => {
+        fetch(`${API_BASE_URL}:3000/dva`).then((d) => {
             d.json().then((j) => {
                 setText(j[0].kirje)
             })
