@@ -21,6 +21,79 @@ services:
     networks:
       - mererza
 
+
+# [Початок] Монастирний Моніторинг
+  influxdb:
+    image: influxdb:2-alpine
+    ports: ["6029:8086"]
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=secretpassword_smartenergy6
+      - DOCKER_INFLUXDB_INIT_ORG=KPI
+      - DOCKER_INFLUXDB_INIT_BUCKET=smart_energy
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=secretpassword_smartenergy6
+
+  # MQTT Broker
+  mosquitto:
+    image: eclipse-mosquitto:2.1.2-alpine
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto.passwd:/mosquitto/config/mosquitto.passwd
+      - ./mosquitto.acl:/mosquitto/config/mosquitto.acl
+    ports:
+      - "6030:1883"
+      - "6031:9001"
+
+  # ESP32 Simulator Controller
+  simulators:
+    image: vicmony/monitoring-monastyrnyi-simulators
+    depends_on:
+      - mosquitto
+    environment:
+      - BROKER_URL=mqtt://mosquitto:1883
+      - MQTT_USER=simulator
+      - MQTT_PASSWORD=simulator_pass
+      - CLIENT_ID=ESP32_SIMULATOR
+      - SENSOR_DATA_TOPIC=sensor/data
+      - SIMULATOR_CONTROL_TOPIC=simulator/control
+      - SIMULATOR_STATUS_TOPIC=simulator/status
+
+  # Ingestor (Скрипт, що переписує дані з MQTT в InfluxDB)
+  ingestor:
+    image: vicmony/monitoring-monastyrnyi-ingestor
+    depends_on:
+      - influxdb
+      - mosquitto
+    environment:
+      - TZ=Europe/Kyiv
+      - MQTT_URL=mqtt://mosquitto:1883
+      - MQTT_USER=ingestor
+      - MQTT_PASSWORD=ingestor_pass
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_TOKEN=secretpassword_smartenergy6
+      - INFLUX_ORG=KPI
+      - INFLUX_BUCKET=smart_energy
+      - DATA_SAVE_TOPIC=sensor-data
+
+  # History API (Microservice for historical data)
+  history-api:
+    image: vicmony/monitoring-monastyrnyi-history-api
+    ports:
+      - "6032:6032"
+    depends_on:
+      - influxdb
+    environment:
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_TOKEN=secretpassword_smartenergy6
+      - INFLUX_ORG=KPI
+      - INFLUX_BUCKET=smart_energy
+      - PORT=6032
+      - DATA_SAVE_TOPIC=sensor-data
+# [Кінець] Монастирний Моніторинг
+
   backend-kravchenko:
     image: nastensii/smart-energy-backend:latest
     container_name: smart_energy_api_kravchenko
@@ -59,4 +132,5 @@ networks:
     driver: bridge
 
 volumes:
+  influxdb_data: # оголошено том для всього проєкту
   mongo_data:
