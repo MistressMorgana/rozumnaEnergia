@@ -1,0 +1,15 @@
+user ingestor
+topic read sensor/data
+
+user simulator
+topic write sensor/data
+topic write simulator/status
+topic read simulator/control
+
+user frontend
+topic read sensor/data
+topic read simulator/status
+topic write simulator/control
+
+user physical_esp32
+topic write sensor/data

@@ -23,6 +23,9 @@ export default function Home() {
         >
           $ Smart Energy EMS (Троян)
         </NavLink>
+        <NavLink className="font-bold hover:text-lime-700 transition" to="Monitoring_Monastyrnyi">
+          Моніторинг (Монастирний)
+        </NavLink >
       <nav className="bg-lime-200 p-4 mb-4 flex gap-4">
         <NavLink className="font-bold" to="sivuKaksi">
           toineen sivuun
