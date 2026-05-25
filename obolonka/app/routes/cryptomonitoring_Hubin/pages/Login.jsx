@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import api from "../services/api";
-import "./css/index.css";
-import "./css/style.css";
+import "../css/index.css";
+import "../css/style.css";
 
 export default function Login() {
 

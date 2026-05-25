@@ -14,13 +14,17 @@
     "@react-router/node": "7.13.1",
     "@react-router/serve": "7.13.1",
     "@xyflow/react": "^12.10.2",
+    "axios": "^1.16.1",
+    "chart.js": "^4.5.1",
     "exceljs": "^3.4.0",
     "html2canvas": "^1.4.1",
     "isbot": "^5.1.36",
     "jspdf": "^4.2.1",
     "react": "^19.2.4",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.4",
     "react-router": "7.13.1",
+    "react-router-dom": "^7.15.1",
     "recharts": "^3.8.1"
   },
   "devDependencies": {

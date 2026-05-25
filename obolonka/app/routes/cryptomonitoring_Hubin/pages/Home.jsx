@@ -3,8 +3,8 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 import api from "../services/api";
-import "./css/index.css";
-import "./css/style.css";
+import "../css/index.css";
+import "../css/style.css";
 
 export default function Home() {
 

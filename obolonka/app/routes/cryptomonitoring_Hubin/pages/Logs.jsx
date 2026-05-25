@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
-import "./css/index.css";
-import "./css/style.css";
+import "../css/index.css";
+import "../css/style.css";
 // Компонент для показу помилки
 function ErrorPopup({ message }) {
     return (
