@@ -16,5 +16,8 @@ export default [
     route("iot-gateway", "routes/iotGateway/index.jsx"),
     
     route("cryptomonitoring_Hubin", "routes/cryptomonitoring_Hubin/index.jsx"),
-
+route(
+  "functional-stability-shevchenko",
+  "routes/functional_stability_Shevchenko/src/index.tsx"
+),
 ] satisfies RouteConfig;
