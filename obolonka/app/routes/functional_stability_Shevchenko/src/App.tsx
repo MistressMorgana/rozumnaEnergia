@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWebSocket } from './hooks/useWebSocket';
-import { Snapshot, BatteryData, LoadData } from './types';
+import type { Snapshot, BatteryData, LoadData } from './types';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, AreaChart, Area,

@@ -5,4 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  ssr: {
+    external: ['recharts', 'react-smooth', 'd3-scale', 'd3-shape', 'd3-path', 'd3-interpolate'],
+  },
 });

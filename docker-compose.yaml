@@ -94,6 +94,18 @@ services:
       - DATA_SAVE_TOPIC=sensor-data
 # [Кінець] Монастирний Моніторинг
 
+
+# START Шевченко Анастасія Володимирівна
+# Functional Stability
+
+  functional-stability-shevchenko:
+    image: mistressmorgana/energy-backend:latest
+    ports:
+      - "6040:8000"
+    restart: unless-stopped
+
+# END Шевченко Анастасія Володимирівна
+
   backend-kravchenko:
     image: nastensii/smart-energy-backend:latest
     container_name: smart_energy_api_kravchenko
